@@ -233,21 +233,23 @@ body {
 /* Navbar */
 .navbar-wrap {
   position: sticky;
-  top: 16px;
+  top: 14px;
   z-index: 100;
   padding: 0 16px;
   margin-bottom: 24px;
 }
 
 .nav-inner {
-  background: rgba(251, 247, 241, 0.88);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(251, 247, 241, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-radius: 999px;
-  padding: 10px 22px;
+  padding: 8px 18px 8px 14px;
+  min-height: 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 14px;
   box-shadow: var(--clay-shadow-card);
   border: 1px solid rgba(255, 255, 255, 0.95);
 }
@@ -255,26 +257,45 @@ body {
 .brand-logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   text-decoration: none;
   color: inherit;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-orb {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
 }
 
 .nav-title {
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 800;
   color: var(--clay-ink);
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
 }
 
 .nav-subtitle {
-  font-size: 11px;
+  font-size: 10.5px;
   color: var(--clay-muted);
+  white-space: nowrap;
+  line-height: 1.2;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 14px;
+  flex-shrink: 1;
 }
 
 .nav-link {
@@ -282,22 +303,54 @@ body {
   color: var(--clay-muted);
   font-size: 13.5px;
   font-weight: 600;
-  transition: color 0.2s ease;
+  white-space: nowrap;
+  padding: 6px 10px;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  line-height: 1;
 }
 
 .nav-link:hover {
   color: var(--clay-accent);
+  background: rgba(47, 125, 109, 0.08);
+}
+
+.nav-link.nav-link-active {
+  color: var(--clay-accent);
+  background: rgba(47, 125, 109, 0.12);
+  font-weight: 700;
+  box-shadow: inset 1px 1px 2px rgba(145, 160, 155, 0.15);
 }
 
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.beacon-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: #d4ede0;
+  color: #1e5a4d;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .nav-cta {
-  padding: 8px 18px;
+  padding: 8px 16px;
   font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 /* Hero Section */
@@ -1225,7 +1278,20 @@ body {
 }
 
 /* Responsive Breakpoints */
-@media (max-width: 900px) {
+@media (max-width: 1140px) {
+  .nav-links {
+    gap: 8px;
+  }
+  .nav-link {
+    font-size: 13px;
+    padding: 5px 8px;
+  }
+  .beacon-wrap {
+    display: none;
+  }
+}
+
+@media (max-width: 960px) {
   .hero-heading { font-size: 34px; }
   .bento-grid { grid-template-columns: 1fr; }
   .bento-span-2 { grid-column: span 1; }
@@ -1234,40 +1300,29 @@ body {
   .footer-inner { grid-template-columns: 1fr; }
   .privacy-content-grid { grid-template-columns: 1fr; }
   .nav-links { display: none; }
+  .brand-logo .nav-subtitle { display: none; }
+}
+
+@media (max-width: 480px) {
+  .navbar-wrap {
+    padding: 0 10px;
+    top: 8px;
+  }
+  .nav-inner {
+    padding: 6px 12px;
+  }
+  .brand-logo .nav-title {
+    font-size: 13px;
+  }
+  .nav-cta {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
 }
 
 /* ==========================================================================
    Help Center, Support Page & Chrome Web Store Support Desk Styling
    ========================================================================== */
-
-.nav-link-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--clay-cream-light);
-  border: 1px solid var(--clay-border);
-  padding: 6px 14px;
-  border-radius: 9999px;
-  font-family: var(--clay-font);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--clay-ink);
-  cursor: pointer;
-  box-shadow: 0 4px 10px -2px rgba(56, 74, 70, 0.12),
-              inset 1px 1px 2px rgba(255, 255, 255, 0.95);
-  transition: all 0.2s ease;
-}
-
-.nav-link-btn:hover {
-  background: var(--clay-mint);
-  transform: translateY(-1px);
-}
-
-.nav-link-btn.nav-link-active {
-  background: var(--clay-mint-dark);
-  color: #ffffff;
-  border-color: var(--clay-mint-dark);
-}
 
 .footer-link-btn {
   background: none;

@@ -13,7 +13,7 @@ export default function Navbar({ currentView, onNavigateToSupport, onNavigateToH
           className="brand-logo"
         >
           <div className="orb-3d nav-orb"></div>
-          <div>
+          <div className="brand-text">
             <div className="nav-title">Medium Trending Topics Finder</div>
             <div className="nav-subtitle">100% Local In-Page Analytics</div>
           </div>
@@ -38,7 +38,7 @@ export default function Navbar({ currentView, onNavigateToSupport, onNavigateToH
             }}
             className="nav-link"
           >
-            The Formula
+            Formula
           </a>
           <a
             href="#features"
@@ -58,7 +58,7 @@ export default function Navbar({ currentView, onNavigateToSupport, onNavigateToH
             }}
             className="nav-link"
           >
-            Privacy & Store Specs
+            Privacy
           </a>
           <a
             href="#faq"
@@ -70,14 +70,17 @@ export default function Navbar({ currentView, onNavigateToSupport, onNavigateToH
           >
             FAQ
           </a>
-          <button
-            onClick={onNavigateToSupport}
-            className={`nav-link-btn ${currentView === 'support' ? 'nav-link-active' : ''}`}
+          <a
+            href="#support"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigateToSupport();
+            }}
+            className={`nav-link ${currentView === 'support' ? 'nav-link-active' : ''}`}
             title="Help Center, Troubleshooting & Developer Contact"
           >
-            <span className="help-icon">💬</span>
-            <span>Help & Support</span>
-          </button>
+            Help & Support
+          </a>
         </nav>
 
         <div className="nav-actions">
