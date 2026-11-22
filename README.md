@@ -59,7 +59,7 @@ The web app allows creators, content strategists, and publication editors to tes
 ### 4. 🛡️ Privacy & Permissions Disclosures (`PrivacyPolicySection.jsx`)
 - Comprehensive Chrome Web Store developer compliance documentation detailing:
   - Strict **zero-data-collection** guarantee (no PII, cookies, or remote logging).
-  - Explicit justification for Chrome permissions (`https://medium.com/*`, `storage`, `activeTab`).
+  - Explicit justification for minimal Chrome permissions (`storage` and static `content_scripts`).
   - Zero external telemetry or tracking dependencies.
 
 ### 5. 🎨 Soft 3D Claymorphic Design System (`src/index.css`)
@@ -160,7 +160,7 @@ This web application acts as the official **Support URL** registered with the **
 2. **Scanner & Overlay Diagnostics**: What to do if the overlay does not inject on `medium.com`, handling page refreshes, and ad-blocker whitelisting.
 3. **Infinite Scroll Indexing**: Explains how `MutationObserver` captures dynamically loaded stories as the user scrolls down Medium tag pages.
 4. **CSV Export Inquiries**: Guidance on downloading and importing structured story metrics into Google Sheets, Notion, or Excel.
-5. **Permissions & Security Justification**: Clear documentation of `https://medium.com/*`, `storage`, and `activeTab` permissions confirming 100% local, zero-telemetry execution.
+5. **Permissions & Security Justification**: Clear documentation of `storage` permission and static `content_scripts` confirming 100% local, zero-telemetry execution.
 
 ---
 

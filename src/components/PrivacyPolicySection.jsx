@@ -25,15 +25,13 @@ export default function PrivacyPolicySection() {
               <h3>2. Chrome Permissions Justification</h3>
               <ul className="perms-list">
                 <li>
-                  <code>https://medium.com/*</code> — Required to inspect article preview elements (titles, claps, comments)
-                  and inject the claymorphic analytics overlay onto tag and feed pages.
-                </li>
-                <li>
                   <code>storage</code> — Used exclusively via <code>chrome.storage.local</code> to save the last 10 detected
                   stories on your device so you can view them inside the toolbar popup. No data ever leaves your computer.
                 </li>
                 <li>
-                  <code>activeTab</code> — Allows opening tag pages directly when clicking topic chips inside the toolbar popup.
+                  <code>content_scripts</code> — Statically declared for <code>https://medium.com/tag/*</code> and <code>https://medium.com/</code> to
+                  inspect publicly visible story preview elements (titles, claps, comments) and inject the local analytics panel.
+                  No host permissions or background network access required.
                 </li>
               </ul>
             </div>

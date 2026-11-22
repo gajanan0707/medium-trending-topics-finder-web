@@ -64,8 +64,8 @@ const KB_CATEGORIES = [
     badge: '🛡️ Safety & Policy',
     items: [
       {
-        q: 'Why does the extension require "https://medium.com/*" host permission?',
-        a: 'The extension needs host permission exclusively on medium.com to inspect publicly visible story preview elements (titles, authors, claps, comments) and inject the local analytics panel. It has no access to any other website you visit.'
+        q: 'What permissions does the extension require?',
+        a: 'The extension adheres strictly to the principle of least privilege: it only requests the "storage" permission to cache your recent scans locally via chrome.storage.local. Content scripts are statically matched only to Medium tag and feed pages (https://medium.com/tag/* and https://medium.com/) to render the local analytics overlay. It does not request activeTab, host permissions, background workers, or access to any external servers.'
       },
       {
         q: 'What is the "storage" permission used for?',
