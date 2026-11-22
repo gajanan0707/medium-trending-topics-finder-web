@@ -31,4 +31,4 @@ User-agent: Applebot-Extended
 Allow: /
 
 # Sitemaps
-Sitemap: https://mediumradar.app/sitemap.xml
+Sitemap: https://medium-trending-topics-finder.vercel.app/sitemap.xml
