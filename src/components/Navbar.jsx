@@ -1,10 +1,17 @@
 import React from 'react';
 
-export default function Navbar() {
+export default function Navbar({ currentView, onNavigateToSupport, onNavigateToHome }) {
   return (
     <header className="navbar-wrap">
       <div className="container nav-inner">
-        <a href="#" className="brand-logo">
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            onNavigateToHome();
+          }}
+          className="brand-logo"
+        >
           <div className="orb-3d nav-orb"></div>
           <div>
             <div className="nav-title">Medium Trending Topics Finder</div>
@@ -13,11 +20,64 @@ export default function Navbar() {
         </a>
 
         <nav className="nav-links">
-          <a href="#demo" className="nav-link">Live Radar</a>
-          <a href="#algorithm" className="nav-link">The Formula</a>
-          <a href="#features" className="nav-link">Features</a>
-          <a href="#privacy" className="nav-link">Privacy & Store Specs</a>
-          <a href="#faq" className="nav-link">FAQ</a>
+          <a
+            href="#demo"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigateToHome('#demo');
+            }}
+            className="nav-link"
+          >
+            Live Radar
+          </a>
+          <a
+            href="#algorithm"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigateToHome('#algorithm');
+            }}
+            className="nav-link"
+          >
+            The Formula
+          </a>
+          <a
+            href="#features"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigateToHome('#features');
+            }}
+            className="nav-link"
+          >
+            Features
+          </a>
+          <a
+            href="#privacy"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigateToHome('#privacy');
+            }}
+            className="nav-link"
+          >
+            Privacy & Store Specs
+          </a>
+          <a
+            href="#faq"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigateToHome('#faq');
+            }}
+            className="nav-link"
+          >
+            FAQ
+          </a>
+          <button
+            onClick={onNavigateToSupport}
+            className={`nav-link-btn ${currentView === 'support' ? 'nav-link-active' : ''}`}
+            title="Help Center, Troubleshooting & Developer Contact"
+          >
+            <span className="help-icon">💬</span>
+            <span>Help & Support</span>
+          </button>
         </nav>
 
         <div className="nav-actions">

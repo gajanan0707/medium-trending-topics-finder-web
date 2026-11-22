@@ -7,6 +7,9 @@
 - **Extension Name**: Medium Trending Topics Finder
 - **Repository Slug**: medium-trending-topics-finder
 - **Official Live Website**: https://medium-trending-topics-finder.vercel.app/
+- **Official Support URL / Help Center**: https://medium-trending-topics-finder.vercel.app/#support
+- **Support Contact Email**: mrcoder701@gmail.com
+- **SLA Response Window**: 24–48 Business Hours
 - **License**: MIT (Open Source)
 - **Privacy Model**: 100% Local in-browser execution. Zero external API calls, zero tracking, zero remote data storage.
 - **Compatibility**: All Chromium browsers (Google Chrome, Brave, Microsoft Edge, Arc, Opera, Vivaldi).
@@ -24,3 +27,4 @@
 4. **Dynamic In-Feed Sorting**: Re-ranks stories on the fly by Engagement Score, Most Claps, or Most Comments.
 5. **1-Click CSV Export**: Downloads structured reports containing Rank, Title, Claps, Comments, Engagement Score, Trend Signal, and Story URLs.
 6. **Toolbar Popup**: Quick tag slug search bar, instant topic chips, and local offline scan history caching (`chrome.storage.local`).
+7. **Comprehensive Help Center & Support Desk**: Troubleshooting guides, overlay setup diagnostics, CSV export FAQs, and direct email ticket composer to `mrcoder701@gmail.com`.

@@ -24,6 +24,7 @@ The web app allows creators, content strategists, and publication editors to tes
 - [The 5× Engagement Velocity Formula](#-the-5-engagement-velocity-formula)
 - [Tech Stack](#-tech-stack)
 - [Project Architecture](#-project-architecture)
+- [Help Center & Support Desk](#-help-center--support-desk-chrome-web-store-support-url)
 - [Prerequisites](#-prerequisites)
 - [Getting Started](#-getting-started)
 - [Available Scripts](#-available-scripts)
@@ -107,6 +108,7 @@ medium-trending-topics-finder-web/
 ├── index.html                   # HTML entry point with Schema.org JSON-LD & SEO meta
 ├── package.json                 # Project dependencies and npm scripts
 ├── vite.config.js               # Vite configuration (port 3000, React plugin)
+├── vercel.json                  # SPA routing rules for static deployment
 ├── LICENSE                      # MIT Open Source License
 ├── public/
 │   ├── icon16.png               # Favicon & extension icon (16x16)
@@ -116,22 +118,49 @@ medium-trending-topics-finder-web/
 │   ├── robots.txt               # Search engine crawler policies
 │   └── sitemap.xml              # XML Sitemap for search indexing
 └── src/
-    ├── App.jsx                  # Root layout aggregating sections
+    ├── App.jsx                  # Root layout aggregating sections & support router
     ├── main.jsx                 # React DOM mount point
     ├── index.css                # Global styles, variables, and Claymorphism theme
     ├── components/
-    │   ├── Navbar.jsx           # Sticky claymorphic navigation header
+    │   ├── Navbar.jsx           # Sticky claymorphic navigation header with support link
     │   ├── Hero.jsx             # Hero section with CTA & trust indicators
     │   ├── InteractiveRadarDemo.jsx # Live in-browser tag simulator & CSV exporter
     │   ├── AlgorithmExplainer.jsx   # Formula breakdown & interactive calculator
     │   ├── FeaturesBento.jsx    # Bento grid showcasing core capabilities
     │   ├── PrivacyPolicySection.jsx # Compliance & permissions disclosures
     │   ├── FAQSection.jsx       # Expandable FAQ accordion
-    │   └── Footer.jsx           # Legal disclaimers, links, and attribution
+    │   ├── HelpCenter.jsx       # Dedicated Chrome Web Store Help & Support Center
+    │   └── Footer.jsx           # Legal disclaimers, support email, and links
     └── data/
         ├── faqData.js           # Structured FAQ questions and answers
         └── mockStories.js       # Curated story datasets across multiple topics
 ```
+
+### 6. 💬 Dedicated Help Center & Support Desk (`HelpCenter.jsx`)
+- **Official Chrome Web Store Support URL**: Provides the required support destination for Google Chrome Web Store listing approval.
+- **Direct Developer Email**: `mrcoder701@gmail.com` with guaranteed 24–48h response window.
+- **Pre-formatted Ticket Generator**: In-browser composer allowing users to specify issue categories (Bug Report, Feature Request, Overlay Troubleshooting, Permissions & Privacy) and launch prefilled email drafts.
+- **Self-Serve Knowledge Base**: Categorized step-by-step solutions for extension installation, toolbar pinning, infinite scroll scanning, CSV downloads, and permissions explanations.
+
+---
+
+## 💬 Help Center & Support Desk (Chrome Web Store Support URL)
+
+This web application acts as the official **Support URL** registered with the **Google Chrome Web Store Developer Dashboard** for the **Medium Trending Topics Finder** extension.
+
+### Support Credentials & Contact Details
+- **Official Support URL**: `https://medium-trending-topics-finder.vercel.app/#support` (or `/support`)
+- **Primary Support Email**: [`mrcoder701@gmail.com`](mailto:mrcoder701@gmail.com)
+- **Response Time Guarantee**: Within 24–48 business hours
+- **Developer**: Gajanan Patil
+- **Compliance Status**: Verified against Chrome Web Store Developer Program Policies & Single Purpose Policy
+
+### Supported Troubleshooting Topics
+1. **Installation & Pinning**: How to install from Chrome Web Store and pin to the browser toolbar.
+2. **Scanner & Overlay Diagnostics**: What to do if the overlay does not inject on `medium.com`, handling page refreshes, and ad-blocker whitelisting.
+3. **Infinite Scroll Indexing**: Explains how `MutationObserver` captures dynamically loaded stories as the user scrolls down Medium tag pages.
+4. **CSV Export Inquiries**: Guidance on downloading and importing structured story metrics into Google Sheets, Notion, or Excel.
+5. **Permissions & Security Justification**: Clear documentation of `https://medium.com/*`, `storage`, and `activeTab` permissions confirming 100% local, zero-telemetry execution.
 
 ---
 
