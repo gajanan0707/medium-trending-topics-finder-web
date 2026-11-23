@@ -124,12 +124,6 @@ export default function Footer({ currentView, onNavigateToSupport, onNavigateToH
             <a href={`mailto:${supportEmail}`} className="footer-highlight-email">
               ✉️ {supportEmail}
             </a>
-            <a href="/llms.txt" target="_blank" rel="noopener noreferrer">
-              llms.txt (AI Schema)
-            </a>
-            <a href="/robots.txt" target="_blank" rel="noopener noreferrer">
-              robots.txt
-            </a>
             <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer">
               Sitemap
             </a>
