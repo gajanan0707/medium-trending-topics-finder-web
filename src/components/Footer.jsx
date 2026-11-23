@@ -134,7 +134,7 @@ export default function Footer({ currentView, onNavigateToSupport, onNavigateToH
               Sitemap
             </a>
             <a
-              href="https://github.com/your-username/medium-trending-topics-finder"
+              href="https://github.com/gajanan0707/medium-trending-topics-finder"
               target="_blank"
               rel="noopener noreferrer"
             >

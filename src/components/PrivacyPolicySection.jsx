@@ -50,7 +50,7 @@ export default function PrivacyPolicySection() {
               <p>
                 For technical inquiries, bug reports, or feature requests, visit the open-source repository at{' '}
                 <a
-                  href="https://github.com/your-username/medium-trending-topics-finder"
+                  href="https://github.com/gajanan0707/medium-trending-topics-finder"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="privacy-link"
