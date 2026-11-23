@@ -92,7 +92,7 @@ export default function Navbar({ currentView, onNavigateToSupport, onNavigateToH
           </div>
 
           <a
-            href="https://github.com/your-username/medium-trending-topics-finder"
+            href="https://chromewebstore.google.com/detail/medium-trending-topics-fi/gfinohkkhodkhlhkagdoagjekkheaamp"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-clay btn-clay-primary nav-cta"

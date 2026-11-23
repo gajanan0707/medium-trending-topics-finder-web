@@ -34,7 +34,7 @@ export default function Hero() {
           >
             <span>🚀 Add to Chrome — It's Free</span>
           </a>
-          <a href="#demo" className="btn-clay btn-clay-secondary btn-large">
+          <a href="https://chromewebstore.google.com/detail/medium-trending-topics-fi/gfinohkkhodkhlhkagdoagjekkheaamp" className="btn-clay btn-clay-secondary btn-large">
             <span>⚡ Test In-Browser Radar</span>
           </a>
         </div>
