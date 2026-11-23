@@ -9,52 +9,54 @@ export default function FeaturesBento() {
           <h2 className="section-title">Built for Modern Writers, Researchers & Growth Hackers</h2>
           <p className="section-desc">
             Everything you need to discover high-performing story concepts, spy on topic momentum,
-            and export clean datasets without friction.
+            find top publications to pitch, and export clean datasets without friction.
           </p>
         </div>
 
         <div className="bento-grid">
-          {/* Card 1: Real-time In-Page Injection */}
+          {/* Card 1: 3-in-1 Live DOM Scanner */}
           <div className="clay-card bento-card bento-span-2">
             <div className="bento-icon-orb orb-3d"></div>
-            <h3 className="bento-heading">Real-Time In-Page Analytics Overlay</h3>
+            <h3 className="bento-heading">3-in-1 In-Page Radar: Stories, Publications & Writers</h3>
             <p className="bento-text">
               No need to switch between tabs or open external dashboards. Medium Trending Topics Finder injects a tactile
               claymorphic panel directly at the top of any Medium tag page (e.g., <code>/tag/artificial-intelligence</code>)
-              and your personalized home feed.
+              and your homepage feed. Toggle between <strong>Trending Stories</strong>, <strong>Top Publications</strong>, and <strong>Top Writers</strong> with one click.
             </p>
             <div className="bento-pill-tags">
-              <span className="badge-pill badge-mint">In-Page Dashboard</span>
-              <span className="badge-pill badge-teal">Zero Tab Switching</span>
-              <span className="badge-pill badge-peach">Live Scanning</span>
+              <span className="badge-pill badge-mint">🔥 Trending Stories</span>
+              <span className="badge-pill badge-teal">🏛️ Top Publications</span>
+              <span className="badge-pill badge-peach">✍️ Top Writers</span>
             </div>
           </div>
 
-          {/* Card 2: MutationObserver Infinite Scroll */}
+          {/* Card 2: Dual Live Ingestion Sources */}
           <div className="clay-card bento-card">
             <div className="bento-icon-orb orb-3d"></div>
-            <h3 className="bento-heading">Infinite Scroll Auto-Indexer</h3>
+            <h3 className="bento-heading">Dual-Source Live Intelligence</h3>
             <p className="bento-text">
-              Medium dynamically loads stories as you scroll down. The extension uses an active <code>MutationObserver</code> to
-              capture, index, and re-rank stories seamlessly without manual refreshing.
+              Combines Medium’s official <em>"Who to follow"</em> sidebar (parsed follower counts) with real-time story feed aggregation.
+              Detects authors and publications appearing in both for hybrid <code>Top Writer + Feed</code> badges.
             </p>
             <div className="bento-pill-tags">
-              <span className="badge-pill badge-mint">Async GraphQL Hook</span>
-              <span className="badge-pill badge-teal">Debounced Rescans</span>
+              <span className="badge-pill badge-mint">Sidebar Follower Parser</span>
+              <span className="badge-pill badge-teal">Feed Aggregation</span>
             </div>
           </div>
 
-          {/* Card 3: 1-Click CSV Export */}
+          {/* Card 3: 1-Click Multi-Dataset CSV Export */}
           <div className="clay-card bento-card">
             <div className="bento-icon-orb orb-3d"></div>
-            <h3 className="bento-heading">1-Click CSV Data Export</h3>
+            <h3 className="bento-heading">1-Click Tab-Aware CSV Export</h3>
             <p className="bento-text">
-              Download clean spreadsheets featuring Rank, Title, Claps, Comments, Engagement Score, Trend Signal,
-              and Story URLs ready for Notion, Google Sheets, or Python analysis.
+              Export dedicated spreadsheets based on your active view:
+              Stories (claps, comments, velocity), Publications (followers, feed claps, stories in feed),
+              or Writers (discussion scores, followers). Ready for Notion, Google Sheets, or Python.
             </p>
             <div className="bento-pill-tags">
-              <span className="badge-pill badge-peach">Spreadsheet Ready</span>
-              <span className="badge-pill badge-mint">Content Strategy</span>
+              <span className="badge-pill badge-peach">Stories CSV</span>
+              <span className="badge-pill badge-mint">Publications CSV</span>
+              <span className="badge-pill badge-teal">Writers CSV</span>
             </div>
           </div>
 
@@ -64,12 +66,12 @@ export default function FeaturesBento() {
             <h3 className="bento-heading">100% Local & Zero-Telemetry Privacy</h3>
             <p className="bento-text">
               Your reading habits and research are your own business. The extension runs entirely in your browser sandbox.
-              Zero remote analytics, zero tracking cookies, and zero external server calls. Meets Google's strictest
-              Chrome Web Store privacy guidelines.
+              Zero remote analytics, zero tracking cookies, zero external server calls, and minimal permissions (only local storage).
+              Meets Google's strictest Chrome Web Store privacy guidelines.
             </p>
             <div className="bento-pill-tags">
-              <span className="badge-pill badge-mint">No External API</span>
-              <span className="badge-pill badge-teal">Local Sandbox</span>
+              <span className="badge-pill badge-mint">No External APIs</span>
+              <span className="badge-pill badge-teal">Audited Least Privilege</span>
               <span className="badge-pill badge-peach">Manifest V3</span>
             </div>
           </div>

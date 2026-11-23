@@ -40,14 +40,20 @@ The web app allows creators, content strategists, and publication editors to tes
 
 ### 1. 🎯 Interactive Radar Demo (`InteractiveRadarDemo.jsx`)
 - **Simulated In-Page Overlay**: Experience how the extension's claymorphic analytics bar operates inside Medium tag pages (`medium.com/tag/*`).
+- **3 Live Intelligence Tabs**: Toggle instantly between **🔥 Trending Stories**, **🏛️ Top Publications**, and **✍️ Top Writers**.
+- **Dual-Source Ingestion Simulator**: Mimics data from Medium's "Who to follow" sidebar (followers) and live story feed aggregation (claps, comments, stories in feed).
 - **Tag Switching & Custom Queries**: Seamlessly toggle between popular topics (`artificial-intelligence`, `programming`, `technology`, `python`, `writing`) or input any custom tag slug.
-- **Dynamic Multi-Metric Sorting**: Re-rank stories on the fly by **Engagement Score**, **Most Claps**, or **Most Comments**.
-- **Real-Time KPI Summaries**: Automatic calculations of total story count, aggregate claps, total comments, and peak engagement score.
-- **1-Click CSV Export**: Generate and download structured spreadsheet reports containing Rank, Title, Claps, Comments, Engagement Score, Signal, and Story URLs directly from the client.
+- **Dynamic Multi-Metric Sorting**: Re-rank on the fly by **Primary Score**, **Most Claps**, or **Most Comments**.
+- **Real-Time KPI Summaries**: Automatic calculations of total counts, aggregate claps, total comments, and top-ranked entities per tab.
+- **1-Click Tab-Aware CSV Export**: Generate and download structured spreadsheet reports for Stories, Publications, or Writers directly from the client.
 
-### 2. 📐 Mathematical Model & Live Calculator (`AlgorithmExplainer.jsx`)
-- **Interactive Calculator**: Adjust slider or number inputs for claps and comments to observe live score changes and automated trend badge tier assignment.
-- **Mathematical Transparency**: Clear rationale exposing why comment-weighting surfaces genuine reader resonance over superficial clapping.
+### 2. 📐 Mathematical Models & Multi-Mode Calculator (`AlgorithmExplainer.jsx`)
+- **3 Distinct Ranking Equations**:
+  - **Stories**: $\text{Engagement Score} = \text{Claps} + (\text{Comments} \times 5)$
+  - **Top Publications**: $\text{Primary Score} = \text{Followers} + (\text{Total Feed Claps} \times 10)$
+  - **Top Writers**: $\text{Primary Score} = \text{Followers} + (\text{Total Feed Claps} \times 10) + (\text{Total Feed Comments} \times 50)$
+- **Dual Live Sources Breakdown**: Explains how `extractWhoToFollowFromDOM()` parses follower counts and how `runLiveDOMExtraction()` aggregates feed cards, merging matches into hybrid badges (`Top Writer + Feed` & `Top Pub + Feed`).
+- **Interactive Multi-Mode Calculator**: Switch between Story, Publication, and Writer modes to simulate live scoring with interactive sliders.
 
 ### 3. 🍱 Features Bento Grid (`FeaturesBento.jsx`)
 - Visual overview highlighting:
@@ -71,22 +77,38 @@ The web app allows creators, content strategists, and publication editors to tes
 
 ---
 
-## 📐 The 5× Engagement Velocity Formula
+## 📐 Ranking Equations & Live DOM Pipeline
 
 Traditional Medium aggregators rank content purely by claps. However, claps require minimal effort (a reader can hold the clap button for up to 50 claps in seconds). In contrast, writing a thoughtful comment requires reading comprehension, critical thought, and user intent.
 
-### Scoring Equation
+### 1. Trending Stories Scoring Equation
 
 $$\text{Engagement Score} = \text{Claps} + (\text{Responses} \times 5)$$
 
-### Signal Tiers
+### 2. Top Publications Scoring Equation
 
-| Signal Badge | Condition | Description |
-| :--- | :--- | :--- |
-| `💬 High Debate` | Responses $\ge 30$ | High community discourse, debate, controversy, or active discussion |
-| `🔥 Viral Claps` | Claps $\ge 1{,}000$ | Broad platform distribution and wide viral reach |
-| `⚡ Rising` | Score $\ge 200$ | Rapid organic momentum and rising audience curiosity |
-| `✨ Active` | Score $< 200$ | Steady baseline reader momentum and interest |
+$$\text{Publication Score} = \text{Followers} + (\text{Total Feed Claps} \times 10)$$
+
+*Balances overall publication authority and audience reach with real-time story performance in the active topic feed.*
+
+### 3. Top Writers Scoring Equation
+
+$$\text{Writer Score} = \text{Followers} + (\text{Total Feed Claps} \times 10) + (\text{Total Feed Responses} \times 50)$$
+
+*Heavily rewards authors whose stories ignite active debates and discussion threads in the community.*
+
+### Signal & Source Tiers
+
+| Badge | Type | Condition | Description |
+| :--- | :--- | :--- | :--- |
+| `💬 High Debate` | Story Signal | Responses $\ge 30$ | High community discourse, debate, controversy, or active discussion |
+| `🔥 Viral Claps` | Story Signal | Claps $\ge 1{,}000$ | Broad platform distribution and wide viral reach |
+| `⚡ Rising` | Story Signal | Score $\ge 200$ | Rapid organic momentum and rising audience curiosity |
+| `✨ Active` | Story Signal | Score $< 200$ | Steady baseline reader momentum and interest |
+| `Top Pub + Feed` | Entity Source | Sidebar + Feed | High-authority publication actively driving stories in current feed |
+| `Top Writer + Feed` | Entity Source | Sidebar + Feed | Elite topic writer with major follower base and active feed traction |
+| `Top Ranked / Writer` | Entity Source | Who to follow | Verified Medium topic authority identified from sidebar |
+| `Feed Pub / Writer` | Entity Source | Feed Discovery | Active contributor discovered dynamically through story cards |
 
 ---
 

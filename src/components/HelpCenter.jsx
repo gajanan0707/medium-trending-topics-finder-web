@@ -59,6 +59,25 @@ const KB_CATEGORIES = [
     ]
   },
   {
+    id: 'analytics',
+    title: 'Top Publications & Writers Analytics',
+    badge: '🏛️ Topic Intelligence',
+    items: [
+      {
+        q: 'How does the extension extract Top Publications and Top Writers?',
+        a: 'The extension uses two live sources:\n1. Medium\'s "Who to follow" sidebar (extractWhoToFollowFromDOM): Scans verified topic badges like "Writer · 59K followers" or "Publication · 329K followers" to capture authentic follower statistics.\n2. Story Feed Aggregation (runLiveDOMExtraction): Inspects loaded article cards to count storiesInFeed, totalClaps, and totalComments per entity.\nWhen a writer or publication is found in both places, the extension automatically merges them into a hybrid badge ("Top Writer + Feed" or "Top Pub + Feed").'
+      },
+      {
+        q: 'How are Publications and Writers ranked?',
+        a: 'When sorted by Primary Score (default):\n• Top Publications: followers + (totalClaps × 10)\n• Top Writers: followers + (totalClaps × 10) + (totalComments × 50)\nYou can also sort by "Most Claps" or "Most Comments" to rank purely by feed performance.'
+      },
+      {
+        q: 'What data is included in the CSV export for Publications and Writers?',
+        a: 'Exporting from the Top Publications tab downloads: Rank, Publication, Followers, Stories in Feed, Total Claps, Total Comments, Source, and URL.\nExporting from the Top Writers tab downloads: Rank, Writer, Followers, Stories in Feed, Total Claps, Total Comments, Source, and URL.'
+      }
+    ]
+  },
+  {
     id: 'permissions',
     title: 'Privacy & Chrome Web Store Permissions',
     badge: '🛡️ Safety & Policy',
@@ -392,10 +411,16 @@ Chrome Version / OS: ${navigator.userAgent}`;
               📊 CSV Export
             </button>
             <button
+              onClick={() => setActiveCategory('analytics')}
+              className={`filter-btn ${activeCategory === 'analytics' ? 'filter-active' : ''}`}
+            >
+              🏛️ Pubs &amp; Writers
+            </button>
+            <button
               onClick={() => setActiveCategory('permissions')}
               className={`filter-btn ${activeCategory === 'permissions' ? 'filter-active' : ''}`}
             >
-              🛡️ Privacy & Permissions
+              🛡️ Privacy &amp; Permissions
             </button>
           </div>
 

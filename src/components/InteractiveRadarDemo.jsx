@@ -1,31 +1,92 @@
 import React, { useState, useMemo } from 'react';
-import { MOCK_STORIES_BY_TAG } from '../data/mockStories';
+import {
+  MOCK_STORIES_BY_TAG,
+  MOCK_PUBLICATIONS_BY_TAG,
+  MOCK_WRITERS_BY_TAG
+} from '../data/mockStories';
 
 const POPULAR_TAGS = ['artificial-intelligence', 'programming', 'technology', 'python', 'writing'];
+
+function formatCompact(n) {
+  if (!n || n <= 0) return '0';
+  if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+  if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+  return n.toLocaleString();
+}
 
 export default function InteractiveRadarDemo() {
   const [activeTag, setActiveTag] = useState('artificial-intelligence');
   const [customTagInput, setCustomTagInput] = useState('');
-  const [sortBy, setSortBy] = useState('score');
+  const [activeTab, setActiveTab] = useState('stories'); // 'stories' | 'publications' | 'writers'
+  const [sortBy, setSortBy] = useState('score'); // 'score' | 'claps' | 'comments'
   const [isScanning, setIsScanning] = useState(false);
   const [exportedStatus, setExportedStatus] = useState(false);
 
-  const stories = useMemo(() => {
+  // Stories sorted
+  const sortedStories = useMemo(() => {
     const list = MOCK_STORIES_BY_TAG[activeTag] || MOCK_STORIES_BY_TAG['artificial-intelligence'];
     return [...list].sort((a, b) => b[sortBy] - a[sortBy]);
   }, [activeTag, sortBy]);
 
+  // Publications sorted
+  const sortedPublications = useMemo(() => {
+    const list = MOCK_PUBLICATIONS_BY_TAG[activeTag] || MOCK_PUBLICATIONS_BY_TAG['artificial-intelligence'];
+    return [...list].sort((a, b) => {
+      if (sortBy === 'claps') return b.totalClaps - a.totalClaps;
+      if (sortBy === 'comments') return b.totalComments - a.totalComments;
+      // Primary Score: followers + (totalClaps * 10)
+      return (b.followers + b.totalClaps * 10) - (a.followers + a.totalClaps * 10);
+    });
+  }, [activeTag, sortBy]);
+
+  // Writers sorted
+  const sortedWriters = useMemo(() => {
+    const list = MOCK_WRITERS_BY_TAG[activeTag] || MOCK_WRITERS_BY_TAG['artificial-intelligence'];
+    return [...list].sort((a, b) => {
+      if (sortBy === 'claps') return b.totalClaps - a.totalClaps;
+      if (sortBy === 'comments') return b.totalComments - a.totalComments;
+      // Primary Score: followers + (totalClaps * 10) + (totalComments * 50)
+      return (
+        (b.followers + b.totalClaps * 10 + b.totalComments * 50) -
+        (a.followers + a.totalClaps * 10 + a.totalComments * 50)
+      );
+    });
+  }, [activeTag, sortBy]);
+
+  // Dynamic KPIs depending on active tab
   const kpis = useMemo(() => {
-    const totalClaps = stories.reduce((sum, s) => sum + s.claps, 0);
-    const totalComments = stories.reduce((sum, s) => sum + s.comments, 0);
-    const topScore = stories.length > 0 ? stories[0].score : 0;
-    return {
-      count: stories.length,
-      totalClaps,
-      totalComments,
-      topScore
-    };
-  }, [stories]);
+    if (activeTab === 'stories') {
+      const totalClaps = sortedStories.reduce((sum, s) => sum + s.claps, 0);
+      const totalComments = sortedStories.reduce((sum, s) => sum + s.comments, 0);
+      const topScore = sortedStories.length > 0 ? sortedStories[0].score : 0;
+      return [
+        { label: 'Top Engagement Score', value: topScore.toLocaleString(), type: 'hero' },
+        { label: 'Stories Scanned', value: sortedStories.length, type: 'mint' },
+        { label: 'Total Claps', value: totalClaps.toLocaleString(), type: 'default' },
+        { label: 'Total Comments', value: totalComments.toLocaleString(), type: 'peach' }
+      ];
+    } else if (activeTab === 'publications') {
+      const totalFollowers = sortedPublications.reduce((sum, p) => sum + p.followers, 0);
+      const totalClaps = sortedPublications.reduce((sum, p) => sum + p.totalClaps, 0);
+      const topName = sortedPublications.length > 0 ? sortedPublications[0].name : 'None';
+      return [
+        { label: 'Top Publication', value: topName, type: 'hero', isName: true },
+        { label: 'Publications Found', value: sortedPublications.length, type: 'mint' },
+        { label: 'Visible Followers', value: formatCompact(totalFollowers), type: 'default' },
+        { label: 'Feed Claps', value: formatCompact(totalClaps), type: 'peach' }
+      ];
+    } else {
+      const topWritersCount = sortedWriters.filter((w) => w.followers > 0).length;
+      const totalClaps = sortedWriters.reduce((sum, w) => sum + w.totalClaps, 0);
+      const topName = sortedWriters.length > 0 ? sortedWriters[0].name : 'None';
+      return [
+        { label: 'Top Writer', value: topName, type: 'hero', isName: true },
+        { label: 'Writers Found', value: sortedWriters.length, type: 'mint' },
+        { label: 'Who-to-Follow Writers', value: topWritersCount, type: 'default' },
+        { label: 'Writer Claps', value: formatCompact(totalClaps), type: 'peach' }
+      ];
+    }
+  }, [activeTab, sortedStories, sortedPublications, sortedWriters]);
 
   const handleTagChange = (tag) => {
     if (tag === activeTag) return;
@@ -48,16 +109,57 @@ export default function InteractiveRadarDemo() {
   };
 
   const handleExportCSV = () => {
-    const rows = [['Rank', 'Title', 'Claps', 'Comments', 'Engagement Score', 'Signal', 'URL']];
-    stories.forEach((s, i) => {
-      rows.push([i + 1, `"${s.title.replace(/"/g, '""')}"`, s.claps, s.comments, s.score, s.signal, s.url]);
-    });
-    const csvContent = rows.map(r => r.join(',')).join('\n');
+    let rows = [];
+    if (activeTab === 'stories') {
+      rows = [['Rank', 'Title', 'Claps', 'Comments', 'Score', 'Author', 'Publication', 'URL']];
+      sortedStories.forEach((s, i) => {
+        rows.push([
+          i + 1,
+          `"${s.title.replace(/"/g, '""')}"`,
+          s.claps,
+          s.comments,
+          s.score,
+          `"${s.authorName || ''}"`,
+          `"${s.pubName || ''}"`,
+          s.url
+        ]);
+      });
+    } else if (activeTab === 'publications') {
+      rows = [['Rank', 'Publication', 'Followers', 'Stories in Feed', 'Total Claps', 'Total Comments', 'Source', 'URL']];
+      sortedPublications.forEach((p, i) => {
+        rows.push([
+          i + 1,
+          `"${p.name.replace(/"/g, '""')}"`,
+          p.followers,
+          p.storiesInFeed,
+          p.totalClaps,
+          p.totalComments,
+          `"${p.source}"`,
+          p.url
+        ]);
+      });
+    } else {
+      rows = [['Rank', 'Writer', 'Followers', 'Stories in Feed', 'Total Claps', 'Total Comments', 'Source', 'URL']];
+      sortedWriters.forEach((w, i) => {
+        rows.push([
+          i + 1,
+          `"${w.name.replace(/"/g, '""')}"`,
+          w.followers,
+          w.storiesInFeed,
+          w.totalClaps,
+          w.totalComments,
+          `"${w.source}"`,
+          w.url
+        ]);
+      });
+    }
+
+    const csvContent = rows.map((r) => r.join(',')).join('\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `medium-trending-${activeTag}.csv`;
+    a.download = `medium-${activeTab}-${activeTag}.csv`;
     a.click();
     URL.revokeObjectURL(url);
 
@@ -79,8 +181,9 @@ export default function InteractiveRadarDemo() {
           <span className="badge-pill badge-teal">⚡ Interactive In-Page Simulator</span>
           <h2 className="section-title">See Medium Trending Topics Finder in Action</h2>
           <p className="section-desc">
-            This live playground mirrors the exact Soft 3D Claymorphic dashboard injected onto Medium tag pages.
-            Switch topics, change sort criteria, or download a CSV sample.
+            Explore the exact Soft 3D Claymorphic dashboard injected onto Medium tag pages.
+            Switch between <strong>Trending Stories</strong>, <strong>Top Publications</strong>, and <strong>Top Writers</strong>,
+            change sorting criteria, or download a real CSV dataset.
           </p>
         </div>
 
@@ -126,7 +229,7 @@ export default function InteractiveRadarDemo() {
               <span>https://medium.com/tag/{activeTag}</span>
             </div>
             <div className="browser-status">
-              <span className="live-indicator">LIVE FEED SIMULATION</span>
+              <span className="live-indicator">LIVE DOM SCANNER SIMULATION</span>
             </div>
           </div>
 
@@ -148,7 +251,7 @@ export default function InteractiveRadarDemo() {
                         </span>
                       )}
                     </h3>
-                    <p className="radar-subtitle">Ranked by claps, comments, and engagement velocity</p>
+                    <p className="radar-subtitle">Live DOM scan · Stories, Top Publications &amp; Top Writers</p>
                   </div>
                 </div>
 
@@ -158,7 +261,7 @@ export default function InteractiveRadarDemo() {
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
                   >
-                    <option value="score">Sort: Engagement Score</option>
+                    <option value="score">Sort: Primary Score</option>
                     <option value="claps">Sort: Most Claps</option>
                     <option value="comments">Sort: Most Comments</option>
                   </select>
@@ -182,27 +285,49 @@ export default function InteractiveRadarDemo() {
                 </div>
               </div>
 
-              {/* KPI Stat Cards */}
-              <div className="kpi-grid">
-                <div className="kpi-card hero">
-                  <span className="kpi-label">Top Engagement Score</span>
-                  <span className="kpi-number">{kpis.topScore.toLocaleString()}</span>
-                </div>
-                <div className="kpi-card mint">
-                  <span className="kpi-label">Stories Scanned</span>
-                  <span className="kpi-number">{kpis.count}</span>
-                </div>
-                <div className="kpi-card">
-                  <span className="kpi-label">Total Claps</span>
-                  <span className="kpi-number">{kpis.totalClaps.toLocaleString()}</span>
-                </div>
-                <div className="kpi-card peach">
-                  <span className="kpi-label">Total Comments</span>
-                  <span className="kpi-number">{kpis.totalComments.toLocaleString()}</span>
+              {/* Navigation Tabs (Stories / Publications / Writers) */}
+              <div className="mtr-tabs-container">
+                <div className="mtr-tabs-bar">
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('stories')}
+                    className={`mtr-tab-pill ${activeTab === 'stories' ? 'active' : ''}`}
+                  >
+                    🔥 Trending Stories
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('publications')}
+                    className={`mtr-tab-pill ${activeTab === 'publications' ? 'active' : ''}`}
+                  >
+                    🏛️ Top Publications
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('writers')}
+                    className={`mtr-tab-pill ${activeTab === 'writers' ? 'active' : ''}`}
+                  >
+                    ✍️ Top Writers
+                  </button>
                 </div>
               </div>
 
-              {/* Story List */}
+              {/* KPI Stat Cards */}
+              <div className="kpi-grid">
+                {kpis.map((kpi, idx) => (
+                  <div key={idx} className={`kpi-card ${kpi.type}`}>
+                    <span className="kpi-label">{kpi.label}</span>
+                    <span
+                      className="kpi-number"
+                      style={kpi.isName ? { fontSize: '18px', lineHeight: 1.25 } : {}}
+                    >
+                      {kpi.value}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Story / Publication / Writer List */}
               <div className="story-list-container">
                 {isScanning ? (
                   <div className="skeleton-loading-list">
@@ -223,8 +348,9 @@ export default function InteractiveRadarDemo() {
                       </div>
                     ))}
                   </div>
-                ) : (
-                  stories.map((story, idx) => (
+                ) : activeTab === 'stories' ? (
+                  /* STORIES VIEW */
+                  sortedStories.map((story, idx) => (
                     <div key={story.id} className="story-card">
                       <div className="story-left">
                         <div className={`rank-orb rank-${idx + 1}`}>#{idx + 1}</div>
@@ -241,7 +367,12 @@ export default function InteractiveRadarDemo() {
                             <span className={`badge-pill badge-${story.badgeType || 'teal'}`}>
                               {story.signal}
                             </span>
-                            <span className="url-hint">medium.com/tag/{activeTag}</span>
+                            {story.pubName && (
+                              <span className="meta-sub-pill">🏛️ {story.pubName}</span>
+                            )}
+                            {story.authorName && (
+                              <span className="meta-sub-pill">✍️ by {story.authorName}</span>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -249,7 +380,73 @@ export default function InteractiveRadarDemo() {
                       <div className="story-metrics">
                         <span className="stat-pill">👏 {story.claps.toLocaleString()}</span>
                         <span className="stat-pill">💬 {story.comments.toLocaleString()}</span>
-                        <span className="stat-pill score">⚡ {story.score.toLocaleString()} score</span>
+                        <span className="stat-pill score-pill">⚡ {story.score.toLocaleString()}</span>
+                      </div>
+                    </div>
+                  ))
+                ) : activeTab === 'publications' ? (
+                  /* PUBLICATIONS VIEW */
+                  sortedPublications.map((pub, idx) => (
+                    <div key={pub.id} className="story-card">
+                      <div className="story-left">
+                        <div className={`rank-orb rank-${idx + 1}`}>#{idx + 1}</div>
+                        <div className="story-info">
+                          <a
+                            href={pub.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="story-title-link"
+                          >
+                            {pub.name}
+                          </a>
+                          <div className="story-tags-row">
+                            <span className="badge-pill badge-mint">{pub.source}</span>
+                            <span className="meta-sub-pill">
+                              📚 {pub.storiesInFeed} stories in feed
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="story-metrics">
+                        {pub.followers > 0 && (
+                          <span className="stat-pill">👥 {formatCompact(pub.followers)}</span>
+                        )}
+                        <span className="stat-pill">👏 {formatCompact(pub.totalClaps)}</span>
+                        <span className="stat-pill score-pill">💬 {pub.totalComments}</span>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  /* WRITERS VIEW */
+                  sortedWriters.map((writer, idx) => (
+                    <div key={writer.id} className="story-card">
+                      <div className="story-left">
+                        <div className={`rank-orb rank-${idx + 1}`}>#{idx + 1}</div>
+                        <div className="story-info">
+                          <a
+                            href={writer.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="story-title-link"
+                          >
+                            {writer.name}
+                          </a>
+                          <div className="story-tags-row">
+                            <span className="badge-pill badge-peach">{writer.source}</span>
+                            <span className="meta-sub-pill">
+                              ✍️ {writer.storiesInFeed} stories in feed
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="story-metrics">
+                        {writer.followers > 0 && (
+                          <span className="stat-pill">👥 {formatCompact(writer.followers)}</span>
+                        )}
+                        <span className="stat-pill">👏 {formatCompact(writer.totalClaps)}</span>
+                        <span className="stat-pill score-pill">💬 {writer.totalComments}</span>
                       </div>
                     </div>
                   ))

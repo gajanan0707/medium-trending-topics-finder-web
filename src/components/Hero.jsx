@@ -15,14 +15,13 @@ export default function Hero() {
         </div>
 
         <h1 className="hero-heading">
-          Spot High-Resonance Medium Topics <br />
-          <span className="hero-highlight">Ranked by Real Engagement Velocity</span>
+          Spot High-Resonance Stories, <br />
+          <span className="hero-highlight">Top Publications &amp; Top Writers on Medium</span>
         </h1>
 
         <p className="hero-subtext">
-          Discover viral stories, underserved niches, and breakout article ideas directly inside Medium’s tag pages.
-          Powered by an intelligent <strong>5× response-weighted engagement score</strong>, tactile Soft 3D Claymorphism,
-          and zero external servers.
+          Discover viral stories, scout high-authority publications to pitch, and identify top niche writers directly inside Medium.
+          Powered by live DOM scraping, sidebar follower ingestion, and a <strong>response-weighted engagement velocity model</strong>—100% locally with zero external servers.
         </p>
 
         <div className="hero-cta-group">
@@ -34,30 +33,30 @@ export default function Hero() {
           >
             <span>🚀 Add to Chrome — It's Free</span>
           </a>
-          <a href="https://chromewebstore.google.com/detail/medium-trending-topics-fi/gfinohkkhodkhlhkagdoagjekkheaamp" className="btn-clay btn-clay-secondary btn-large">
-            <span>⚡ Test In-Browser Radar</span>
+          <a href="#demo" className="btn-clay btn-clay-secondary btn-large">
+            <span>⚡ Test Interactive Radar Simulator</span>
           </a>
         </div>
 
         <div className="hero-metrics-bar">
           <div className="metric-item">
-            <span className="metric-val">5× Multiplier</span>
-            <span className="metric-label">Weighted Comments vs Claps</span>
+            <span className="metric-val">3 Live Tabs</span>
+            <span className="metric-label">Stories, Publications &amp; Writers</span>
           </div>
           <div className="metric-divider"></div>
           <div className="metric-item">
-            <span className="metric-val">0ms Telemetry</span>
-            <span className="metric-label">Runs 100% in Browser RAM</span>
+            <span className="metric-val">Dual Ingestion</span>
+            <span className="metric-label">Sidebar Followers + Feed Aggregation</span>
+          </div>
+          <div className="metric-divider"></div>
+          <div className="metric-item">
+            <span className="metric-val">Response-Weighted</span>
+            <span className="metric-label">5× Story &amp; 50× Writer Debate Multipliers</span>
           </div>
           <div className="metric-divider"></div>
           <div className="metric-item">
             <span className="metric-val">1-Click CSV</span>
-            <span className="metric-label">Instant Market Intelligence</span>
-          </div>
-          <div className="metric-divider"></div>
-          <div className="metric-item">
-            <span className="metric-val">Infinite Scroll</span>
-            <span className="metric-label">Auto-Indexed by MutationObserver</span>
+            <span className="metric-label">Tab-Aware Spreadsheet Exports</span>
           </div>
         </div>
       </div>
